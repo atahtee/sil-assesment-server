@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
         //check if name was entered
         if(!name){
             return res.json({
-                error: 'Name is required'
+                error: 'Please input in the details'
             })
         }
         //check if password is good
