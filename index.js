@@ -8,6 +8,21 @@ const cookieSession = require("cookie-session");
 const passport = require('passport')
 const authRoute = require("./routes/authRoutes")
 
+const allowedOrigins = [
+  "https://savannah-assesment-frontend.vercel.app/"
+]
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  })
+);
+
 //connect my database
 mongoose
   .connect(process.env.MONGO_URL)
