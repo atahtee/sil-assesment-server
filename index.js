@@ -9,13 +9,6 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 const authRoute = require("./routes/authRoutes");
 
-
-const corsOptions = {
-  origin: ["http://localhost:3000", "https://savannah-assesment-frontend.vercel.app"],
-  methods: "GET, POST, PUT, DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-}
 //connect my database
 mongoose
   .connect(process.env.MONGO_URL)
@@ -36,7 +29,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
-  cors(corsOptions)
+  cors({
+    origin: ["http://localhost:3000", "https://savannah-assesment-frontend.vercel.app"],
+    methods: "GET, POST, PUT, DELETE",
+    credentials: true,
+  })
 );
 app.use("/", require("./routes/authRoutes"));
 
