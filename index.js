@@ -1,27 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
+// const passportSetup = require("./passport")
 const { mongoose } = require("mongoose");
 const cookieParser = require("cookie-parser");
 const app = express();
 const cookieSession = require("cookie-session");
-const passport = require('passport')
-const authRoute = require("./routes/authRoutes")
-
-const allowedOrigins = [
-  "https://savannah-assesment-frontend.vercel.app/"
-]
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  })
-);
+const passport = require("passport");
+const authRoute = require("./routes/authRoutes");
 
 //connect my database
 mongoose
@@ -37,19 +23,22 @@ app.use(
   cookieSession({
     name: "session",
     keys: ["sav"],
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 100,
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({
-    origin:"https://savannah-assesment-frontend.vercel.app/",
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://savannah-assesment-frontend.vercel.app"],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
-}))
+  })
+);
 app.use("/", require("./routes/authRoutes"));
 
 app.use("/auth", authRoute);
 
-const port = 8000;
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(process.env.PORT, () =>
+  console.log("App is running on " + process.env.PORT)
+);
