@@ -30,7 +30,7 @@ app.use(passport.session());
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://savannah-assesment-frontend.vercel.app"],
-    methods: "GET, POST, PUT, DELETE",
+    methods: ["GET, POST, PUT, DELETE"],
     credentials: true,
   })
 );
