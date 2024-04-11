@@ -7,7 +7,7 @@ const {test, registerUser, loginUser, getProfile} = require('../controllers/auth
 //middleware
 router.use(
     cors({
-        credentials: true,
+        credentials: ,
         origin: ['http://localhost:3000', 'https://savannah-assesment-frontend.vercel.app/']
     })
 )
